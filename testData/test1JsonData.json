@@ -1,0 +1,35 @@
+{
+  "lines": [
+    {
+      "number": "1",
+      "quantity": 1,
+      "amount": 100,
+      "taxCode": "SA080000",
+          "description": "test"
+    },
+{
+      "number": "2",
+      "quantity": 1,
+      "amount": 100,
+      "taxCode": "FR020100",
+          "description": "test"
+    }
+  ],
+  "type": "SalesInvoice",
+  "companyCode": "DEFAULT",
+  "date": "2021-01-06",
+  "customerCode": "ABC",
+  "purchaseOrderNo": "2021-01-06-001",
+  "addresses": {
+    "singleLocation": {
+      "line1": "",
+      "city": "",
+      "region": "TX",
+      "country": "US",
+      "postalCode": "79701"
+    }
+  },
+  "commit": true,
+  "currencyCode": "USD",
+  "description": "Yarn"
+}
