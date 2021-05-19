@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "71d00e51-cc58-42cd-8e36-50288594dfaa",
+		"name": "Test-Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.body(\"test\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify Header\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.headers.x-forwarded-port).to.eql('443');\r",
+							"    pm.expect(jsonData.headers.x-forwarded-port).to.eql('443');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Url\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.url).contains('https://postman-echo.com/get?test=123');\r",
+							"});\r",
+							" "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://postman-echo.com/get?test=123",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					],
+					"query": [
+						{
+							"key": "test",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.body(\"test\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify Header\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.headers.x-forwarded-port).to.eql('443');\r",
+							"    pm.expect(jsonData.headers.x-forwarded-port).to.eql('443');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Url\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.url).contains('https://postman-echo.com/get?test=123');\r",
+							"});\r",
+							" "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://postman-echo.com/get?test=123",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					],
+					"query": [
+						{
+							"key": "test",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
