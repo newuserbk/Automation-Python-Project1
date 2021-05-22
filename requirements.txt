@@ -1,3 +1,5 @@
+allure-pytest==2.9.41
+allure-python-commons==2.9.41
 apipkg==1.5
 atomicwrites==1.4.0
 attrs==21.1.0
