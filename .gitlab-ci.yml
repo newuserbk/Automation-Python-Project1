@@ -1,0 +1,28 @@
+image: "python:3.7"
+variables:
+  CBT_USERNAME: "YOUR_USERNAME"
+  CBT_AUTHKEY: "YOUR_AUTHKEY"
+
+run_test:
+    script:
+        - pip install selenium
+        - pip install requests
+        - python test_selenium.py
+
+before_script:
+- pip install -r requirements.txt
+stages:
+- test
+- report
+test_suite_1:
+  stage: test
+  script:
+      - python -u test_suite_1.py
+test_suite_2:
+  stage: test
+  script:
+     - python -u test_suite_2.py
+send_report:
+  stage: report
+  script:
+    - python send_report.py
