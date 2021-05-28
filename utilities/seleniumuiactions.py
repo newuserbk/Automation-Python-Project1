@@ -1,5 +1,8 @@
+import time
+
 import requests
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,7 +17,7 @@ class SeleniumUIAction:
     @staticmethod
     def GenerateLocatorObject(FindBy, search_criteria):
         switcher = {
-            FindBy.ID:(By.ID, search_criteria),
+            FindBy.ID: (By.ID, search_criteria),
             FindBy.XPATH: (By.XPATH, search_criteria),
             FindBy.CSS_SELECTOR: (By.CSS_SELECTOR, search_criteria),
             FindBy.CLASS_NAME: (By.CLASS_NAME, search_criteria),
@@ -34,16 +37,16 @@ class SeleniumUIAction:
 
             # element = Driver.Instance.find_element(FindBy, search_criteria)
             # element = Driver.Instance.find_element(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
-            element=Driver.FindVisibleElement(FindBy, search_criteria)
-            if element is not None:
+            element = Driver.FindVisibleElement(FindBy, search_criteria)
+            if element.displayed():
                 is_display_element = True
         except Exception as ex:
-            print("..Element Not Found using locator : " + search_criteria + "Exception : ")
+            print("..Element Not Found using locator : " + search_criteria + "Exception : " + ex)
             is_display_element = False
             return is_display_element
 
     @staticmethod
-    def IsNotDisplayed(self, FindBy, search_criteria):
+    def IsNotDisplayed(FindBy, search_criteria):
         is_display_element = None
         element = Driver.FindVisibleElement(FindBy, search_criteria)
         if element is None:
@@ -52,12 +55,99 @@ class SeleniumUIAction:
         return is_display_element
 
     @staticmethod
-    def IsEnabled():
-        pass
+    def IsEnabled(FindBy, search_criteria):
+        is_enabled = None
+        try:
+            element = Driver.FindVisibleElement(FindBy, search_criteria)
+            is_enabled = element.enabled
+
+        except Exception as ex:
+            print("..Element Not Found using locator : " + search_criteria + "Exception : " + ex)
+        return is_enabled
 
     @staticmethod
-    def IsDisabled():
-        pass
+    def IsDisabled(FindBy, search_criteria):
+        is_disabled = None
+        try:
+            element = Driver.FindVisibleElement(FindBy, search_criteria)
+            if element.enabled() != False:
+                is_disabled = True
+
+        except Exception as ex:
+            print("..Element Not found using locator : " + search_criteria + "Exception : " + ex)
+        return is_disabled
+
+    @staticmethod
+    def IsSelected(FindBy, search_criteria):
+        is_selected = None
+        try:
+            element = Driver.FindVisibleElement(FindBy, search_criteria)
+            is_selected = element.is_selected
+
+        except Exception as ex:
+            print("..Element Not found using locator : " + search_criteria + "Exception : " + ex)
+        return is_selected
+
+    @staticmethod
+    def IsNotSelected(FindBy, search_criteria):
+        is_not_elected = None
+        try:
+            element = Driver.FindVisibleElement(FindBy, search_criteria)
+            is_not_elected = element.is_selected
+            if is_not_elected:
+                print("Error : Element is Selected")
+            else:
+                print("Success: Element is not selected")
+
+        except Exception as ex:
+            print("..Element Not found using locator : " + search_criteria + "Exception : " + ex)
+        return is_not_elected
+
+    @staticmethod
+    def GetCSSValues(FindBy, search_criteria):
+        list_css_details = None
+        try:
+            element = Driver.FindVisibleElement(FindBy, search_criteria)
+
+            if element is not None:
+                list_css_details.append(element.GetCssValue("font-type"))
+                list_css_details.append(element.GetCssValue("font-family"))
+                list_css_details.append(element.GetCssValue("font-size"))
+                list_css_details.append(element.GetCssValue("background-color"))
+
+        except Exception as ex:
+            print("..Element Not found using locator : " + search_criteria + "Exception : " + ex)
+        return list_css_details
+
+    @staticmethod
+    def Get_Text(FindBy, search_criteria):
+        element_text = None
+        try:
+            element = Driver.FindVisibleElement(FindBy, search_criteria)
+            if element is not None:
+                element_text = element.text
+
+        except Exception as ex:
+            print("..Element Not found using locator : " + search_criteria + "Exception : " + ex)
+        return element_text
+
+    @staticmethod
+    def GetAttributeValue(FindBy, search_criteria, attribute_name):
+        attribute_value = None
+        element = Driver.FindVisibleElement(FindBy, search_criteria)
+        attribute_value = element.get_attribute(attribute_name)
+        return attribute_value
+
+    @staticmethod
+    def IsTooltipCorrect(FindBy, search_criteria, expected_tooltip):
+        actual_tooltip = None
+        actual_tooltip = SeleniumUIAction.GetAttributeValue(FindBy, search_criteria, "title")
+        if actual_tooltip == expected_tooltip:
+            print("Tooltip is correct")
+            return True
+        else:
+            print("Tooltip is not correct")
+            return False
 
     @staticmethod
     def click_element(FindBy, search_criteria, wait_time=5):
@@ -76,10 +166,37 @@ class SeleniumUIAction:
             item.Click()
 
     @staticmethod
-    def ScrollToElement():
-        element = Driver.Instance.find_element_by_xpath("")
+    def ScrollToElement(FindBy, search_criteria):
+        element = Driver.FindVisibleElement(FindBy, search_criteria)
         actions = ActionChains(Driver.Instance)
         actions.move_to_element(element).perform()
+
+    @staticmethod
+    def scrollDown(value):
+        Driver.Instance.execute_script("window.scrollBy(0," + str(value) + ")")
+
+    # Scroll down the page
+    @staticmethod
+    def scrollDownAllTheWay(driver):
+        old_page = Driver.Instance.page_source
+        while True:
+            print("Scrolling loop")
+            for i in range(2):
+                SeleniumUIAction.scrollDown(2)
+                time.sleep(2)
+            new_page = Driver.Instance.page_source
+            if new_page != old_page:
+                old_page = new_page
+            else:
+                break
+        return True
+
+    @staticmethod
+    def HoverMouseOver(FindBy, search_criteria):
+        element = Driver.FindVisibleElement(FindBy, search_criteria)
+        actions = ActionChains(Driver.Instance)
+        actions.move_to_element(element).perform()
+        time.sleep(3)
 
     @staticmethod
     def Set_textbox_value(FindBy, search_criteria, value_to_enter):
@@ -93,58 +210,191 @@ class SeleniumUIAction:
         return Driver.Instance.title
 
     @staticmethod
-    def GetTooltip(self, element):
+    def GetTooltip(element):
         tooltip = element.GetAttribute("title")
         return tooltip
 
     @staticmethod
-    def SelectItemByName(self, itemname):
-        select = Select(Driver.Instance.find_element_by_id('fruits01'))
-        select.select_by_visible_text(itemname)
+    def SelectItemByName(FindBy, search_criteria, item_name):
+        element = Driver.FindClickableElement(FindBy, search_criteria)
+        select = Select(element)
+        select.select_by_visible_text(item_name)
 
     @staticmethod
-    def SelectItemByIndex(self, itemIndex):
-        select = Select(Driver.Instance.find_element_by_id('fruits01'))
-        select.select_by_index(itemIndex)
+    def SelectItemByIndex(FindBy, search_criteria, itemIndex):
+        element = Driver.FindClickableElement(FindBy, search_criteria)
+        select = Select(element)
+        select.select_by_visible_text(itemIndex)
 
     @staticmethod
-    def SelectCheckbox(self):
-        pass
+    def SelectCheckbox(FindBy, search_criteria):
+        element = Driver.FindClickableElement(FindBy, search_criteria)
+        if element.is_selected():
+            element.click()
 
     @staticmethod
-    def DeselectCheckbox(self):
-        pass
+    def DeselectCheckbox(FindBy, search_criteria):
+        element = Driver.FindClickableElement(FindBy, search_criteria)
+        if element.is_selected():
+            element.click()
 
     @staticmethod
-    def SelectRadioButton(self):
-        pass
+    def SelectRadioButton(FindBy, search_criteria):
+        element = Driver.FindClickableElement(FindBy, search_criteria)
+        if element.is_selected():
+            element.click()
 
     @staticmethod
-    def DeselectRadioButton(self):
-        pass
+    def DeselectRadioButton(FindBy, search_criteria):
+        element = Driver.FindClickableElement(FindBy, search_criteria)
+        if element.is_selected():
+            element.click()
 
     @staticmethod
-    def IsElementSelected(self):
-        element = Driver.Instance.find_element_by_id('fruits01')
+    def IsElementSelected(FindBy, search_criteria):
+        element = Driver.FindClickableElement(FindBy, search_criteria)
         if element.selected:
             return True
         else:
             return False
 
     @staticmethod
-    def GetDropDownList(self):
-        select = Select(Driver.Instance.find_element_by_id('fruits01'))
+    def GetDropDownList(FindBy, search_criteria):
+        element = Driver.FindClickableElement(FindBy, search_criteria)
+        select = Select(element)
         return select.options
 
     @staticmethod
-    def GetTableElements(self):
-        pass
+    def SwitchToFrame(FindBy, search_criteria):
+        try:
+            frame = Driver.FindVisibleElement(FindBy, search_criteria)
+            Driver.Instance.switch_to_frame(frame)
+        except Exception as ex:
+            print("Failed to switch to frame. Error:-  " + ex)
 
     @staticmethod
-    def SelectDateInDatePickerField(self):
-        pass
+    def GetTableElements(FindBy, search_criteria):
+        element = Driver.FindClickableElement(FindBy, search_criteria)
 
     @staticmethod
-    def IsPageLoadComplete(self):
-        # if ((Boolean)((IJavaScriptExecutor)d).ExecuteScript("return document.readyState").Equals("complete"))
-        pass
+    def get_header_column_values(driver):
+        table = Driver.Instance.find_element_by_xpath("//table")
+        head_data = []
+        for td in table.find_elements_by_tag_name('th'):
+            head_data.append(td.text)
+        print(head_data)
+
+    @staticmethod
+    def get_row_count(self):
+        table = Driver.Instance.find_element_by_xpath("//table")
+        return len(table.find_elements_by_tag_name("tr")) - 1
+
+    @staticmethod
+    def get_column_count(self):
+        table = Driver.Instance.find_element_by_xpath("//table")
+        return len(table.find_elements_by_tag_name("//tr[2]/td"))
+
+    # get rowdata and return it as list
+    @staticmethod
+    def row_data(self, row_number):
+        if row_number == 0:
+            raise Exception("Row number starts from 1")
+
+        row_number = row_number + 1
+        table = Driver.Instance.find_element_by_xpath("//table")
+        row = table.find_elements_by_xpath("//tr[" + str(row_number) + "]/td")
+        r_data = []
+        for webElement in row:
+            r_data.append(webElement.text)
+
+        return r_data
+
+    # get the column data and return as list
+    @staticmethod
+    def column_data(self, column_number):
+        table = Driver.Instance.find_element_by_xpath("//table")
+        col = table.find_elements_by_xpath("//tr/td[" + str(column_number) + "]")
+        r_data = []
+        for webElement in col:
+            r_data.append(webElement.text)
+        return r_data
+
+    @staticmethod
+    def get_column_data_values(driver):
+        table = Driver.Instance.find_element_by_xpath("//table")
+        col_data = []
+        for td in table.find_elements_by_tag_name('td'):
+            col_data.append(td.text)
+        print(col_data)
+
+    @staticmethod
+    def get_row_data_values(driver):
+        table = Driver.Instance.find_element_by_xpath("//table")
+        row_data = []
+        for td in table.find_elements_by_tag_name('tr'):
+            row_data.append(td.text)
+        print(row_data)
+
+    @staticmethod
+    def get_all_data():
+        table = Driver.Instance.find_element_by_xpath("//table")
+        # get number of rows
+        noOfRows = len(table.find_elements_by_xpath("//tr")) - 1
+        # get number of columns
+        noOfColumns = len(table.find_elements_by_xpath("//tr[2]/td"))
+        allData = []
+        # iterate over the rows, to ignore the headers we have started the i with '1'
+        for i in range(2, noOfRows):
+            # reset the row data every time
+            ro = []
+            # iterate over columns
+            for j in range(1, noOfColumns):
+                # get text from the i th row and j th column
+                ro.append(table.find_element_by_xpath("//tr[" + str(i) + "]/td[" + str(j) + "]").text)
+
+            # add the row data to allData of the self.table
+            allData.append(ro)
+
+        return allData
+
+    @staticmethod
+    def get_cell_data(row_number, column_number):
+        table = Driver.Instance.find_element_by_xpath("//table")
+        if row_number == 0:
+            raise Exception("Row number starts from 1")
+
+        rowNumber = row_number + 1
+        cellData = table.find_element_by_xpath("//tr[" + str(rowNumber) + "]/td[" + str(column_number) + "]").text
+        return cellData
+
+    @staticmethod
+    def IsNewTabOpened():
+        is_new_tab_opened = None
+        tabs = Driver.Instance.window_handles
+        if tabs.count() == 2:
+            is_new_tab_opened = True
+        return is_new_tab_opened
+
+    @staticmethod
+    def SelectDateInDatePickerField(FindBy, search_criteria):
+        date_input = Driver.FindClickableElement(FindBy, search_criteria)
+        date_input.click()
+        # date_input.send_keys(Keys.CONTROL, "a")  # Select all pre-existing text/input value
+        # date_input.send_keys(Keys.BACKSPACE)  # Remove that text
+        date_input.send_keys("01012011")
+
+    @staticmethod
+    def is_page_load_complete(FindBy, search_criteria):
+        print("Checking if {} page is loaded.".format(Driver.Instance.current_url))
+        element = Driver.FindVisibleElement(FindBy, search_criteria)
+        while not SeleniumUIAction.page_is_loading():
+            continue
+
+    @staticmethod
+    def page_is_loading():
+        while True:
+            state = Driver.Instance.execute_script("return document.readyState")
+            if state == "complete":
+                return True
+            else:
+                yield False
