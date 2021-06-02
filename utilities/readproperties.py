@@ -26,6 +26,11 @@ class ReadConfig:
         return password
 
     @staticmethod
+    def getEnv():
+        env = config.get('common_info', 'env')
+        return env
+
+    @staticmethod
     def add_min_sleep():
         password = config.get('common_info', 'min_wait')
         return password

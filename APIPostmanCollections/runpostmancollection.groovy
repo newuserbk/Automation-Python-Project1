@@ -1,6 +1,6 @@
-node('build-pod')
+node('master')
 {
-    container('GSTProjectQA'){
+    //container('GSTProjectQA'){
         stage('Download Source'){
             echo "checking out the code"
             checkout scm
@@ -24,5 +24,5 @@ node('build-pod')
                 echo "stage failed, but we continue"
             }
        }
-    }
+    //}
 }

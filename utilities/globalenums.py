@@ -9,4 +9,12 @@ class FindBy(Enum):
     NAME = 5
     TAG_NAME = 6
     XPATH = 7
-    PARTIAL_LINK_TEXT=8
+    PARTIAL_LINK_TEXT = 8
+
+
+class Environment(Enum):
+    DEV = 1
+    QA = 2
+    STAGING = 3
+    SBX = 4
+    PROD = 4

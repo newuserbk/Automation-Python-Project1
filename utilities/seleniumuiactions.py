@@ -216,9 +216,17 @@ class SeleniumUIAction:
 
     @staticmethod
     def SelectItemByName(FindBy, search_criteria, item_name):
-        element = Driver.FindClickableElement(FindBy, search_criteria)
-        select = Select(element)
-        select.select_by_visible_text(item_name)
+        element = None
+        try:
+            element = Driver.FindClickableElement(FindBy, "//div[@id='nav-search-dropdown-card']//select[@title='Search in']/option[text(),'Books']")
+            element.click()
+            # drop = Select(element)
+            # drop.select_by_visible_text(item_name)
+            # drp_element = Driver.FindClickableElement(FindBy,search_criteria)
+            # action = ActionChains(Driver.Instance)
+            # action.click(on_element=drp_element).perform()
+        except Exception as ex:
+            print("..Element Not Found using locator : " + search_criteria + "Exception : " + ex)
 
     @staticmethod
     def SelectItemByIndex(FindBy, search_criteria, itemIndex):
