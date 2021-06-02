@@ -1,5 +1,6 @@
-node('master')
+pipeline
 {
+    agent:any
     //container('GSTProjectQA'){
         stage('Download Source'){
             echo "checking out the code"
