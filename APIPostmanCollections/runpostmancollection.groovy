@@ -21,7 +21,7 @@ node('master')
             }
             catch (Exception ex)
             {
-                echo "stage failed, but we continue"
+                echo "stage failed, but we continue : "+ex
             }
        }
     //}
