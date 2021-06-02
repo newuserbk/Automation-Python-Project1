@@ -1,7 +1,6 @@
 pipeline
 {
-    agent:any
-    //container('GSTProjectQA'){
+       //container('GSTProjectQA'){
         stage('Download Source'){
             echo "checking out the code"
             checkout scm
