@@ -1,6 +1,8 @@
 import time
 import unittest
 
+import pytest
+
 import Driver
 from pageObjects.HomePage.Headers.create_account_page import CreateAmazonAccount
 from pageObjects.HomePage.TopToolbar.bookspage import BooksPage
@@ -25,6 +27,7 @@ class Test_Login(unittest.TestCase):
     def tearDown(self):
         Driver.CloseDriver()
 
+    @pytest.mark.bvt
     def test_verify_Amazon_homepage(self):
         # >>>>>>>>>>>>>>>>Object Creation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         __obj_create_account = CreateAmazonAccount()
@@ -40,6 +43,7 @@ class Test_Login(unittest.TestCase):
         except Exception as ex:
             raise Exception("....Element Not found....." + ex)
 
+    @pytest.mark.bvt
     def test_amazon_create_account_successful(self):
         # >>>>>>>>>>>>>>>>Object Creation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         __obj_create_account = CreateAmazonAccount()
@@ -64,6 +68,7 @@ class Test_Login(unittest.TestCase):
         except Exception as ex:
             print("Test Failed : "+ex)
 
+    @pytest.mark.bvt
     def test_page_http_Status_code(self):
         # >>>>>>>>>>>>>>>>Object Creation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         __obj_create_account = CreateAmazonAccount()
