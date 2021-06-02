@@ -1,4 +1,4 @@
-pipeline
+node('master')
 {
        //container('GSTProjectQA'){
         stage('Download Source'){
