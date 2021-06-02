@@ -17,7 +17,7 @@ node('master')
                     root = pwd()
                     echo "Root Directory is : "+root
                     dir("${root}/APIPostmanCollections"){
-                        bat 'ls -al'
+                        bat 'dir'
                         echo "Listing all directories as below :"
                         bat "newman run test_Collection.postman_collection.json --insecure"
                     }
