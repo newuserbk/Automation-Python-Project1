@@ -1,5 +1,8 @@
 node('master')
 {
+//         environment {
+//         PATH = "C:\\Program Files\\Git\\usr\\bin;C:\\Program Files\\Git\\bin;${env.PATH}"
+//         }
        //container('GSTProjectQA'){
         stage('Download Source'){
             echo "checking out the code"
@@ -18,7 +21,7 @@ node('master')
                     echo "Root Directory is : "+root
                     dir("${root}/APIPostmanCollections"){
                         //bat 'dir'
-                        cd '/APIPostmanCollections'
+                        //cd '/APIPostmanCollections'
                         echo "Listing all directories as below :"
                         bat "newman run test_Collection.postman_collection.json --insecure"
                     }
