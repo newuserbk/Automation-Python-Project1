@@ -18,6 +18,7 @@ node('master')
                     echo "Root Directory is : "+root
                     dir("${root}/APIPostmanCollections"){
                         //bat 'dir'
+                        cd '/APIPostmanCollections'
                         echo "Listing all directories as below :"
                         bat "newman run test_Collection.postman_collection.json --insecure"
                     }
