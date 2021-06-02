@@ -12,8 +12,8 @@ node('master')
                     bat "npm cache clean --force"
                     echo "npm cache cleaned......."
                     bat "npm config set registry https://github.com/newuserbk/Automation-Python-Project1"
-                    bat "npm install -g newman"
-                    echo "newman installed globally......"
+                    //bat "npm install -g newman"
+                    //echo "newman installed globally......"
                     root = pwd()
                     echo "Root Directory is : "+root
                     dir("${root}/APIPostmanCollections"){
