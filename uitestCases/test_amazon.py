@@ -1,6 +1,6 @@
 import time
 import unittest
-
+import  allure
 import pytest
 
 import Driver
@@ -28,6 +28,8 @@ class Test_Login(unittest.TestCase):
         Driver.CloseDriver()
 
     @pytest.mark.bvt
+    @allure.description("test_verify_Amazon_homepage")
+    @allure.severity(severity_level="CRITICAL")
     def test_verify_Amazon_homepage(self):
         # >>>>>>>>>>>>>>>>Object Creation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         __obj_create_account = CreateAmazonAccount()
@@ -44,6 +46,8 @@ class Test_Login(unittest.TestCase):
             raise Exception("....Element Not found....." + ex)
 
     @pytest.mark.bvt
+    @allure.description("test_amazon_create_account_successful")
+    @allure.severity(severity_level="CRITICAL")
     def test_amazon_create_account_successful(self):
         # >>>>>>>>>>>>>>>>Object Creation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         __obj_create_account = CreateAmazonAccount()
@@ -69,6 +73,8 @@ class Test_Login(unittest.TestCase):
             print("Test Failed : "+ex)
 
     @pytest.mark.bvt
+    @allure.description("test_page_http_Status_code")
+    @allure.severity(severity_level="NORMAL")
     def test_page_http_Status_code(self):
         # >>>>>>>>>>>>>>>>Object Creation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         __obj_create_account = CreateAmazonAccount()

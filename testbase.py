@@ -1,5 +1,6 @@
 from datetime import time
 
+import allure
 import requests
 
 import Driver
@@ -11,17 +12,20 @@ import Driver
 class BaseTest:
 
     @staticmethod
+    @allure.step("Enter URL {0}")
     def go_to_url(url):
         print(".............Launching Application URL : " + url)
         # Driver.Instance.get(url)
         Driver.Instance.get(url)
 
     @staticmethod
+    @allure.step("Maximize window")
     def maximize_window_size():
         print("..............Maximizing browser window..............")
         Driver.Instance.maximize_window()
 
     @staticmethod
+    @allure.step("Refreshing Browser")
     def refresh_browser():
         print("..............Refreshing browser window..............")
         Driver.Instance.refresh()
@@ -101,6 +105,7 @@ class BaseTest:
         return response.status_code
 
     @staticmethod
+    @allure.step("Checking status of page")
     def IsCorrectPageStatusCode(page_url):
         print("...Checking Page Status Code is correct...")
         http_status_code = BaseTest.GetPageStatusCode(page_url)
@@ -128,6 +133,7 @@ class BaseTest:
             print("The url: " + page_url + " is Correct. Http status code : " + http_status_code)
 
     @staticmethod
+    @allure.step("Checking status code of of page")
     def check_http_status_code_page(page_url):
         print("check http page status code")
         try:
