@@ -1,4 +1,4 @@
-from pageObjects.POM.LoginPage.test_login import BaseTest
+from testbase import BaseTest
 
 
 class JavaScriptUIActions(BaseTest):

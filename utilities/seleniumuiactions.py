@@ -1,6 +1,8 @@
 import time
+from traceback import print_stack
 
 import requests
+from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -27,6 +29,38 @@ class SeleniumUIAction:
         # in dictionary otherwise second argument will
         # be assigned as default value of passed argument
         return switcher.get(FindBy, "No Switch Case Math/ Default Case")
+
+    @staticmethod
+    def getByType(locatorType):
+        locator_type = locatorType.lower()
+        if locator_type == "id":
+            return By.ID
+        elif locator_type == "name":
+            return By.NAME
+        elif locator_type == "xpath":
+            return By.XPATH
+        else:
+            print("locator type " + locator_type + " is not correct or supported")
+        return False
+
+    @staticmethod
+    def wait_for_element(self, locator, locatorType="id", timeout=10, poll_frequency=0.5):
+        element: None
+        try:
+            byType=SeleniumUIAction.getByType(locatorType)
+            print("waiting for maximum :: " + str(timeout) + " :: for seconds to element clickable")
+            wait=WebDriverWait(Driver.Instance,timeout,poll_frequency=1,ignored_exceptions=[
+                NoSuchElementException,
+                ElementNotVisibleException,
+                ElementNotSelectableException])
+            element=wait.until(EC.element_to_be_clickable(byType,""))
+            print("element appeared on the web page")
+        except:
+            print("element IS NOT appeared on the web page")
+            print_stack()
+        return element
+
+
 
     @staticmethod
     def IsDisplayed(FindBy, search_criteria):
@@ -94,10 +128,10 @@ class SeleniumUIAction:
         try:
             element = Driver.FindVisibleElement(FindBy, search_criteria)
             is_not_elected = element.is_selected
-            if is_not_elected:
-                print("Error : Element is Selected")
+            if not is_not_elected:
+                print("Element is not Selected")
             else:
-                print("Success: Element is not selected")
+                print("Error: Element is  selected")
 
         except Exception as ex:
             print("..Element Not found using locator : " + search_criteria + "Exception : " + ex)
@@ -218,7 +252,8 @@ class SeleniumUIAction:
     def SelectItemByName(FindBy, search_criteria, item_name):
         element = None
         try:
-            element = Driver.FindClickableElement(FindBy, "//div[@id='nav-search-dropdown-card']//select[@title='Search in']/option[text(),'Books']")
+            element = Driver.FindClickableElement(FindBy,
+                                                  "//div[@id='nav-search-dropdown-card']//select[@title='Search in']/option[text(),'Books']")
             element.click()
             # drop = Select(element)
             # drop.select_by_visible_text(item_name)
