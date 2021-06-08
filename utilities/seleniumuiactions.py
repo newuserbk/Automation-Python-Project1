@@ -60,8 +60,6 @@ class SeleniumUIAction:
             print_stack()
         return element
 
-
-
     @staticmethod
     def IsDisplayed(FindBy, search_criteria):
 

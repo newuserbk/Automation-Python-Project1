@@ -1,3 +1,6 @@
+import allure
+import self
+from allure_commons.types import AttachmentType
 from selenium import webdriver
 from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException, InvalidSelectorException, \
     TimeoutException
@@ -75,6 +78,7 @@ def FindVisibleElement(FindBy, search_criteria, wait_time=5):
             EC.visibility_of_element_located(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
         )
     except (StaleElementReferenceException, NoSuchElementException, InvalidSelectorException, TimeoutException) as ex:
+        # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
         pass
     return element
 
