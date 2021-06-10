@@ -33,6 +33,7 @@ class BaseTest(object):
         config.read("..\\configurations\\config.ini")
         self.Initialize()
 
+    @staticmethod
     def Initialize(self):
         self.ENV = config.get('common_info', 'ENV')
         self.login_launch_url = config.get('common_info', 'base_url')
@@ -42,8 +43,8 @@ class BaseTest(object):
         self.max_wait = config.get('common_info', 'max_wait')
         self.TaxYear = config.get('common_info', 'TaxYear')
 
-        if None == testData.LoginUsers or testData.LoginUsers.Count == 0:
-            UserList = TestData.GetLoginUserDetails(self.ENV)
+        # if None == testData.LoginUsers or testData.LoginUsers.Count == 0:
+        #     UserList = TestData.GetLoginUserDetails(self.ENV)
 
     @staticmethod
     @allure.step("Enter URL {0}")

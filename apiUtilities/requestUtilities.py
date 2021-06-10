@@ -6,6 +6,8 @@ import requests
 import os
 from requests_oauthlib import OAuth1
 
+from testbase import BaseTest
+
 url = ""
 
 
@@ -13,7 +15,7 @@ class RequestUtility(object):
 
     def __init__(self):
         # self.env = os.environ.get('ENV', 'test')
-        self.base_url = "https://api.qa.avalara.io"  # read from baseclass
+        self.base_url = BaseTest.base_url  # read from baseclass
         self.auth = HTTPBasicAuth('CalcRegression', 'Qaonly1234$')
         # self.auth = OAuth1("", "")
 
