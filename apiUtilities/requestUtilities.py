@@ -6,16 +6,12 @@ import requests
 import os
 from requests_oauthlib import OAuth1
 
-from testbase import BaseTest
-
-url = ""
-
 
 class RequestUtility(object):
 
     def __init__(self):
         # self.env = os.environ.get('ENV', 'test')
-        self.base_url = BaseTest.base_url  # read from baseclass
+        self.base_url = 'https://api.qa.avalara.io'  # read from baseclass
         self.auth = HTTPBasicAuth('CalcRegression', 'Qaonly1234$')
         # self.auth = OAuth1("", "")
 
@@ -39,13 +35,16 @@ class RequestUtility(object):
             headers = {"Content-Type": "application/json"}
         url = self.base_url + endpoint
 
-        # rs_api = requests.post(url=url, data=payload, headers=headers, auth=self.auth)
-        rs_api = requests.post(url=url, data=payload, headers=headers, auth=self.auth)
-        print(rs_api)
-        # status_code = rs_api.status_code
-        # exp_status_code = expected_status_code
-        # rs_json = rs_api.json()
-        # self.assert_status_code()
+        try:
+            # rs_api = requests.post(url=url, data=payload, headers=headers, auth=self.auth)
+            rs_api = requests.post(url=url, data=payload, headers=headers, auth=self.auth)
+            print(rs_api)
+            # status_code = rs_api.status_code
+            # exp_status_code = expected_status_code
+            # rs_json = rs_api.json()
+            # self.assert_status_code()
+        except Exception as ex:
+            print(ex)
 
         return self.rs_json
 

@@ -1,24 +1,21 @@
 import json
+import unittest
 
 import jsonpath
 import pytest
 import requests
 
 from apiUtilities.requestUtilities import RequestUtility
+from helpers.JsconHelper import ReadJsonUtility
 
-url = ""
 
-
-class testPostAPIRequests:
+class test_PostAPIRequests:
 
     @pytest.mark.tcid10
-    def test_GetNexusByAddress_TCID_0001(self):
+    def GetNexusByAddress_TCID_tests(self):
         print("TEST: Post - Get Nexus By Address")
         # create payload
-        # read input json file
-        file = open("../testData/NexusByAddress.json", "r")
-        json_input = file.read()
-        request_json = json.load(json_input)
+        request_json=ReadJsonUtility.read_json_file()
 
         endpoint = "api/v2/companies/1435173/nexus/byaddress"
 
