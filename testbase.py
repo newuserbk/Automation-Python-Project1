@@ -1,15 +1,49 @@
 from datetime import time
-
 import allure
 import requests
+import testData as testData
 
 import Driver
-
+import configparser
 
 # @pytest.mark.usefixtures("setup")
+from testData import LoginUsers
+from utilities.xmlutilities import TestData
 
 
-class BaseTest:
+class BaseTest(object):
+    # using a global keyword
+    global ENV
+    global login_launch_url
+    global chrome_driver_server_path
+    global base_url
+    global min_wait
+    global max_wait
+    global medium_wait
+    global Driver
+    global HomePageHandler
+    global FirstChildPageHandler
+    global TaxYear
+    global failedScreenShotPath
+    testData.LoginUsers = []
+
+    def __init__(self):
+        global config
+        config = configparser.RawConfigParser()
+        config.read("..\\configurations\\config.ini")
+        self.Initialize()
+
+    def Initialize(self):
+        self.ENV = config.get('common_info', 'ENV')
+        self.login_launch_url = config.get('common_info', 'base_url')
+        self.chrome_driver_server_path = config.get('common_info', 'chrome_driver_path')
+        self.base_url = config.get('common_info', 'base_url')
+        self.min_wait = config.get('common_info', 'min_wait')
+        self.max_wait = config.get('common_info', 'max_wait')
+        self.TaxYear = config.get('common_info', 'TaxYear')
+
+        if None == testData.LoginUsers or testData.LoginUsers.Count == 0:
+            UserList = TestData.GetLoginUserDetails(self.ENV)
 
     @staticmethod
     @allure.step("Enter URL {0}")
@@ -157,4 +191,4 @@ class BaseTest:
             return status_code
 
         except Exception as ex:
-            print("page status not found : "+ex)
+            print("page status not found : " + ex)

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserDetails>
+
+  <QA>
+    <User ClientId="3426905" Username="Bharat" Password="Jajwuth@2016" Role="Normal"/>
+    <User ClientId="3580974" Username="Admin" Password="Jajwuth@2016" Role="CoBrandingAdmin"/>
+  </QA>
+  
+  <SBX>
+    <User ClientId="3426905" Username="Admin" Password="automation321" Role="Normal"/>
+    <User ClientId="3426905" Username="Bharat" Password="password@123" Role="Reviewer"/>
+  
+  </SBX>
+
+  
+</UserDetails>
