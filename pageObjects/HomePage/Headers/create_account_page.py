@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from testbase import BaseTest
 from utilities.globalenums import FindBy
-from utilities.seleniumuiactions import SeleniumUIAction
+from utilities.seleniumUiActions import SeleniumUIAction
 
 
 class CreateAmazonAccount:

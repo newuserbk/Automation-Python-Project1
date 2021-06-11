@@ -32,7 +32,18 @@ def oneTimeSetUp(request,browser):
     # Maximize the window
     log.info("Maximizing browser window")
     driver.maximize_window()
+
+    # This will assign to Global Base Driver in Base class
     BaseTest.Driver=driver
+
+    # Populate Data from config
+    config_path = utils.get_project_rootDirectory() + "\\configurations\\config.ini"
+    import configparser
+    BaseTest.config = configparser.RawConfigParser()
+    BaseTest.config.read(config_path)
+
+    # # Create object so that it will call base class constructor which will populate all the required properties
+    base=BaseTest()
 
     if request.cls is not None:
         request.cls.driver = driver

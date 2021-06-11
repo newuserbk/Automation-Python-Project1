@@ -1,3 +1,5 @@
+import time
+
 import pytest
 import utilities.cutomLogger as cl
 import logging
@@ -11,13 +13,12 @@ class TestMultipleHomePageComp(object):
     log = cl.customLogger(logging.DEBUG)
     pass
 
-    # @pytest.fixture(autouse=True)
-    # def objectSetup(self):
-    #     self.log.info("Visited local class oneTimeSetup")
-    #     # self.courses = RegisterCoursesPage(self.driver)
-    #     # self.ts = TestStatus(self.driver)
-    #
-    #     pass
+    @pytest.fixture(autouse=True)
+    def objectSetup(self):
+        self.log.info("Visited local class oneTimeSetup")
+        # self.courses = RegisterCoursesPage(self.driver)
+        # self.ts = TestStatus(self.driver)
+        self._baseTest=BaseTest()
 
     @pytest.mark.run(order=1)
     @pytest.mark.BVT
@@ -25,7 +26,11 @@ class TestMultipleHomePageComp(object):
         self.log.error(utils.getTestName() +utils.getCurrentTime())
         # print("Root Directory is : "+utils.get_project_rootDirectory())
         self.log.info("Launching browser from Base Class Global Driver")
-        BaseTest.go_to_url('https://courses.letskodeit.com/practice')
+        BaseTest.go_to_url(self._baseTest.login_launch_url)
+        time.sleep(5)
+        self.log.info("Verify browser url")
+        actualURL=BaseTest.getPageURL()
+        assert actualURL==self._baseTest.login_launch_url
         self.log.info("Closing browser")
         BaseTest.CloseAllBrowserWindow()
 
@@ -34,7 +39,7 @@ class TestMultipleHomePageComp(object):
     def test_t1invalidLogin_2(self):
         self.log.info("Test-1-Start : test_t1invalidLogin")
         self.log.info("Launching browser from Base Class Global Driver")
-        BaseTest.go_to_url('https://courses.letskodeit.com/practice')
+        BaseTest.go_to_url(BaseTest.login_launch_url)
         self.log.info("Closing browser")
         BaseTest.CloseAllBrowserWindow()
 

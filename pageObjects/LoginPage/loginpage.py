@@ -6,7 +6,7 @@ import Driver
 from testbase import BaseTest
 from utilities.globalenums import Environment, FindBy
 from utilities.readproperties import ReadConfig
-from utilities.seleniumuiactions import SeleniumUIAction
+from utilities.seleniumUiActions import SeleniumUIAction
 
 
 class LoginPage:

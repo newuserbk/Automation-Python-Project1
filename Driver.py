@@ -12,7 +12,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from utilities.readproperties import ReadConfig
-from utilities.seleniumuiactions import SeleniumUIAction
+from utilities.seleniumUiActions import SeleniumUIAction
 
 max_wait = ReadConfig.add_max_sleep()
 

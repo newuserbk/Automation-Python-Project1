@@ -20,6 +20,7 @@ class BaseTest(object):
     log.info("In Base Class")
     # using a global keyword
     global Driver
+    global config
     global ENV
     global login_launch_url
     global chrome_driver_server_path
@@ -34,23 +35,29 @@ class BaseTest(object):
     testData.LoginUsers = []
 
     def __init__(self):
-        global config
-        config = configparser.RawConfigParser()
-        config.read("..\\configurations\\config.ini")
-        self.Initialize()
+        # global config
+        # config = configparser.RawConfigParser()
+        # config.read("../configurations/config.ini")
+        self.ENV = BaseTest.config.get('common info', 'ENV')
+        self.login_launch_url = BaseTest.config.get('common info', 'application_URL')
+        self.chrome_driver_server_path = BaseTest.config.get('common info', 'chrome_driver_path')
+        self.base_url = BaseTest.config.get('common info', 'base_url')
+        self.min_wait = BaseTest.config.get('common info', 'min_wait')
+        self.max_wait = BaseTest.config.get('common info', 'max_wait')
+        self.TaxYear = BaseTest.config.get('common info', 'TaxYear')
+        # self.Initialize()
 
-    @staticmethod
     def Initialize(self):
-        self.ENV = config.get('common_info', 'ENV')
-        self.login_launch_url = config.get('common_info', 'base_url')
-        self.chrome_driver_server_path = config.get('common_info', 'chrome_driver_path')
-        self.base_url = config.get('common_info', 'base_url')
-        self.min_wait = config.get('common_info', 'min_wait')
-        self.max_wait = config.get('common_info', 'max_wait')
-        self.TaxYear = config.get('common_info', 'TaxYear')
+        # self.ENV = config.get('common info', 'ENV')
+        # self.login_launch_url = config.get('common info', 'application_URL')
+        # self.chrome_driver_server_path = config.get('common info', 'chrome_driver_path')
+        # self.base_url = config.get('common info', 'base_url')
+        # self.min_wait = config.get('common info', 'min_wait')
+        # self.max_wait = config.get('common info', 'max_wait')
+        # self.TaxYear = config.get('common info', 'TaxYear')
         # if None == testData.LoginUsers or testData.LoginUsers.Count == 0:
         #     UserList = TestData.GetLoginUserDetails(self.ENV)
-
+        pass
 
     @staticmethod
     @allure.step("Enter URL {0}")
@@ -64,6 +71,12 @@ class BaseTest(object):
     def maximize_window_size():
         print("..............Maximizing browser window..............")
         Driver.Instance.maximize_window()
+
+    @staticmethod
+    @allure.step("Maximize window")
+    def getPageURL():
+        print("..............Get Page URL..............")
+        return BaseTest.Driver.current_url
 
     @staticmethod
     @allure.step("Refreshing Browser")
