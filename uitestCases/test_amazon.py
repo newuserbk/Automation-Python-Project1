@@ -8,7 +8,7 @@ from pageObjects.HomePage.Headers.create_account_page import CreateAmazonAccount
 from pageObjects.HomePage.TopToolbar.bookspage import BooksPage
 from pageObjects.LoginPage.loginpage import LoginPage
 from testbase import BaseTest
-from utilities.otherutilities import Other_Utilities
+from utilities.genericUtilities import Other_Utilities
 from utilities.readproperties import ReadConfig
 
 

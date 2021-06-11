@@ -5,7 +5,7 @@ from selenium import webdriver
 
 import Driver
 from utilities import keyboarduiactions, pdfutilities
-from utilities.otherutilities import Other_Utilities
+from utilities.genericUtilities import Other_Utilities
 from utilities.readproperties import ReadConfig
 
 

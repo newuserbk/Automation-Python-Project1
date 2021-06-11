@@ -1,31 +1,18 @@
 import json
 import jsonpath
 import requests
-
 from apiUtilities.requestUtilities import RequestUtility
 
-url = ""
 
+class TestGetAPIRequests(object):
 
-class testGetAPIRequests:
-
-    def get_main_url(self):
-        return url
-
-
-    def test_valid_login(self,get_main_url):
+    def test_GetCompanyDetails_TCID0002(self):
         print("TEST: Post - Get Company Details")
-        # create payload
-        # read input json file
-        file = open("../testData/NexusByAddress.json", "r")
-        json_input = file.read()
-        request_json = json.load(json_input)
-
         endpoint = "api / v2 / companies / 1435173"
 
         # make the call
         req_obj = RequestUtility()
-        response = req_obj.GET(endpoint, request_json)
+        response = req_obj.GET(endpoint)
 
         # import pdb;
         # pdb.set_trace()
