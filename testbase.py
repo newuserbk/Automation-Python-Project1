@@ -1,9 +1,12 @@
 from datetime import time
 import allure
+import pytest
 import requests
-import testData as testData
+import self
 
-import Driver
+import testData as testData
+import utilities.cutomLogger as cl
+import logging
 import configparser
 
 # @pytest.mark.usefixtures("setup")
@@ -12,7 +15,11 @@ from utilities.xmlutilities import TestData
 
 
 class BaseTest(object):
+
+    log = cl.customLogger(logging.DEBUG)
+    log.info("In Base Class")
     # using a global keyword
+    global Driver
     global ENV
     global login_launch_url
     global chrome_driver_server_path
@@ -20,7 +27,6 @@ class BaseTest(object):
     global min_wait
     global max_wait
     global medium_wait
-    global Driver
     global HomePageHandler
     global FirstChildPageHandler
     global TaxYear
@@ -42,16 +48,16 @@ class BaseTest(object):
         self.min_wait = config.get('common_info', 'min_wait')
         self.max_wait = config.get('common_info', 'max_wait')
         self.TaxYear = config.get('common_info', 'TaxYear')
-
         # if None == testData.LoginUsers or testData.LoginUsers.Count == 0:
         #     UserList = TestData.GetLoginUserDetails(self.ENV)
+
 
     @staticmethod
     @allure.step("Enter URL {0}")
     def go_to_url(url):
         print(".............Launching Application URL : " + url)
         # Driver.Instance.get(url)
-        Driver.Instance.get(url)
+        BaseTest.Driver.get(url)
 
     @staticmethod
     @allure.step("Maximize window")
@@ -105,6 +111,10 @@ class BaseTest(object):
                 break
         time.sleep(5)
         print("Child window title: " + Driver.Instance.title)
+
+    @staticmethod
+    def CloseAllBrowserWindow():
+        BaseTest.Driver.quit()
 
     @staticmethod
     def CloseCurrentWindow():

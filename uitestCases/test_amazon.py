@@ -8,7 +8,7 @@ from pageObjects.HomePage.Headers.create_account_page import CreateAmazonAccount
 from pageObjects.HomePage.TopToolbar.bookspage import BooksPage
 from pageObjects.LoginPage.loginpage import LoginPage
 from testbase import BaseTest
-from utilities.genericUtilities import Other_Utilities
+from utilities.genericUtils import OtherUtils
 from utilities.readproperties import ReadConfig
 
 
@@ -19,7 +19,7 @@ class Test_Login(unittest.TestCase):
     password = ReadConfig.getPassword()
     min_wait = ReadConfig.add_min_sleep()
     max_wait = ReadConfig.add_max_sleep()
-    guid_value = Other_Utilities.generate_random_string()
+    guid_value = OtherUtils.generate_random_string()
 
     def setUp(self):
         Driver.Initialize()
@@ -103,22 +103,6 @@ class Test_Login(unittest.TestCase):
         except Exception as ex:
             print("Test Failed : "+ex)
 
-    def test_amazon_search_functionality(self):
-        # >>>>>>>>>>>>>>>>Object Creation<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        __obj_login_page = LoginPage()
-        __obj_books_page=BooksPage()
 
-        # >>>>>>>>>>>>>>>>Test Execution<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        try:
-            __obj_login_page.Login()
-            logged_in_username=__obj_login_page.get_logged_in_username()
-            assert "Bharat" in logged_in_username
-            __obj_books_page.select_Books_dropdown_link("Books")
-            __obj_books_page.set_search_book_name("success")
-            __obj_books_page.click_search_button()
-            __obj_books_page.verify_book_image()
-
-        except Exception as ex:
-            print("Test Failed : "+ex)
 
 

@@ -1,12 +1,31 @@
+import inspect
 import time
 import traceback
 import random, string
+from pathlib import Path
+
+import moment as moment
+
 import utilities.cutomLogger as cl
 import logging
 
 
-class Other_Utilities:
+class OtherUtils:
     log = cl.customLogger(logging.INFO)
+
+    @staticmethod
+    def getTestName():
+        return inspect.stack()[1][3]
+
+    @staticmethod
+    def getCurrentTime():
+        currentTime = moment.now().strftime("%d-%m-%Y_%H-%M-%S")
+        return currentTime
+
+    @staticmethod
+    def get_project_rootDirectory():
+        root=str(Path(__file__).parent.parent)
+        return root
 
     @staticmethod
     def generate_random_string():

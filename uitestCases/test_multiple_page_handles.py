@@ -5,7 +5,7 @@ from selenium import webdriver
 
 import Driver
 from utilities import keyboarduiactions, pdfutilities
-from utilities.genericUtilities import Other_Utilities
+from utilities.genericUtils import OtherUtils
 from utilities.readproperties import ReadConfig
 
 
@@ -16,7 +16,7 @@ class Test_Login(unittest.TestCase):
     password = ReadConfig.getPassword()
     min_wait = ReadConfig.add_min_sleep()
     max_wait = ReadConfig.add_max_sleep()
-    guid_value = Other_Utilities.generate_random_string()
+    guid_value = OtherUtils.generate_random_string()
 
     def setUp(self):
         Driver.Initialize()
@@ -28,7 +28,7 @@ class Test_Login(unittest.TestCase):
     def test_switch_window_and_download_pdf(self):
         download_dir = "C:\\Users"
         options = webdriver.ChromeOptions()
-        root_path = Other_Utilities.get_project_root_path()
+        root_path = OtherUtils.get_project_root_path()
         print("Root Project path : " + root_path)
         profile = {"plugins.plugins_list": [{"enabled": False,
                                              "name": "Chrome PDF Viewer"}],
