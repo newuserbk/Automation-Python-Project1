@@ -44,7 +44,7 @@ class SeleniumUIAction:
         return False
 
     @staticmethod
-    def wait_for_element(self, locator, locatorType="id", timeout=10, poll_frequency=0.5):
+    def waitForElement(self, locator, locatorType="id", timeout=10, poll_frequency=0.5):
         element: None
         try:
             byType=SeleniumUIAction.getByType(locatorType)
@@ -53,7 +53,7 @@ class SeleniumUIAction:
                 NoSuchElementException,
                 ElementNotVisibleException,
                 ElementNotSelectableException])
-            element=wait.until(EC.element_to_be_clickable(byType,""))
+            element=wait.until(EC.element_to_be_clickable(byType,locator))
             print("element appeared on the web page")
         except:
             print("element IS NOT appeared on the web page")

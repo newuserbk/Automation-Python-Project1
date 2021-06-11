@@ -1,3 +1,7 @@
+import os
+import time
+from traceback import print_stack
+
 import allure
 import self
 from allure_commons.types import AttachmentType
@@ -29,7 +33,8 @@ def Initialize_Headless():
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')  # Last I checked this was necessary.
-    Instance = webdriver.Chrome("C:/Personal Doc/Returns Team/Selenium Drivers/chromedriver.exe", chrome_options=options)
+    Instance = webdriver.Chrome("C:/Personal Doc/Returns Team/Selenium Drivers/chromedriver.exe",
+                                chrome_options=options)
     Instance.implicitly_wait(5)
     return Instance
 
@@ -38,6 +43,27 @@ def CloseDriver():
     global Instance
     print("Closing Browser")
     Instance.quit()
+
+
+def screenShot(resultMessage):
+    """
+            Takes screenshot of the current open web page
+            """
+    fileName = resultMessage + "." + str(round(time.time() * 1000)) + ".png"
+    screenshotDirectory = "../screenshots/"
+    relativeFileName = screenshotDirectory + fileName
+    currentDirectory = os.path.dirname(__file__)
+    destinationFile = os.path.join(currentDirectory, relativeFileName)
+    destinationDirectory = os.path.join(currentDirectory, screenshotDirectory)
+
+    try:
+        if not os.path.exists(destinationDirectory):
+            os.makedirs(destinationDirectory)
+        self.driver.save_screenshot(destinationFile)
+        self.log.info("Screenshot save to directory: " + destinationFile)
+    except:
+        self.log.error("### Exception Occurred when taking screenshot")
+        print_stack()
 
 
 def FindElement(FindBy, search_criteria, wait_time=None):
