@@ -44,6 +44,7 @@ def oneTimeSetUp(request,browser):
 
     # # Create object so that it will call base class constructor which will populate all the required properties
     base=BaseTest()
+    # create dictionary and populate all values and refer across the session
 
     if request.cls is not None:
         request.cls.driver = driver

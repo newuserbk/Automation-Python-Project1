@@ -24,7 +24,7 @@ class BooksPage:
 
     def select_Books_dropdown_link(self,name):
         print("..............Selecting Books from drop down ..............")
-        SeleniumUIAction.SelectItemByName(FindBy.XPATH, self.search_DropdownDescription_xpath,name)
+        SeleniumUIAction.SelectItemByText(FindBy.XPATH, self.search_DropdownDescription_xpath, name)
 
     def set_search_book_name(self,bookname):
         print("..............Entering/Searching for success book ..............")

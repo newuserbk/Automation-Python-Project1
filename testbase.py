@@ -38,7 +38,7 @@ class BaseTest(object):
         # global config
         # config = configparser.RawConfigParser()
         # config.read("../configurations/config.ini")
-        self.ENV = BaseTest.config.get('common info', 'ENV')
+        # self.ENV = BaseTest.config.get('common info', 'ENV')
         self.login_launch_url = BaseTest.config.get('common info', 'application_URL')
         self.chrome_driver_server_path = BaseTest.config.get('common info', 'chrome_driver_path')
         self.base_url = BaseTest.config.get('common info', 'base_url')
