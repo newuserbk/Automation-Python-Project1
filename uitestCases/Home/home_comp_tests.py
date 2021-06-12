@@ -7,6 +7,7 @@ import logging
 from pageObjects.HomePage.homepage import homepageD
 from testbase import BaseTest
 from utilities.genericUtils import OtherUtils as utils
+from utilities.seleniumUiActions import SeleniumUIAction
 
 
 @pytest.mark.usefixtures("oneTimeSetUp")
@@ -29,7 +30,7 @@ class TestMultipleHomePageComp(object):
         # print("Root Directory is : "+utils.get_project_rootDirectory())
         self.log.info("Launching browser from Base Class Global Driver")
         BaseTest.go_to_url(self._baseTest.login_launch_url)
-        time.sleep(5)
+        self._homepage.WaitForPageLoad()
         self.log.info("Verify browser url")
         actualURL=BaseTest.getPageURL()
         assert actualURL==self._baseTest.login_launch_url

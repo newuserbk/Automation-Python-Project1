@@ -61,3 +61,7 @@ class homepageD:
         print(".............Click Alert Button ..............")
         SeleniumUIAction.click_element(FindBy.ID, self.alert_btn_id)
 
+    def WaitForPageLoad(self):
+        page_Load_Status=SeleniumUIAction.is_page_load_complete(FindBy.ID,self.carselction_drpdwn_id)
+        print(page_Load_Status)
+

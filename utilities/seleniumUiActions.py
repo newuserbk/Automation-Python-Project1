@@ -46,13 +46,13 @@ class SeleniumUIAction:
     def waitForElement(self, locator, locatorType="id", timeout=10, poll_frequency=0.5):
         element: None
         try:
-            byType=SeleniumUIAction.getByType(locatorType)
+            byType = SeleniumUIAction.getByType(locatorType)
             print("waiting for maximum :: " + str(timeout) + " :: for seconds to element clickable")
-            wait=WebDriverWait(BaseTest.Driver,timeout,poll_frequency=1,ignored_exceptions=[
+            wait = WebDriverWait(BaseTest.Driver, timeout, poll_frequency=1, ignored_exceptions=[
                 NoSuchElementException,
                 ElementNotVisibleException,
                 ElementNotSelectableException])
-            element=wait.until(EC.element_to_be_clickable(byType,locator))
+            element = wait.until(EC.element_to_be_clickable(byType, locator))
             print("element appeared on the web page")
         except:
             print("element IS NOT appeared on the web page")
@@ -68,7 +68,7 @@ class SeleniumUIAction:
 
             # element = BaseTest.Driver.find_element(FindBy, search_criteria)
             # element = BaseTest.Driver.find_element(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
-            element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+            element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
             if element.displayed():
                 is_display_element = True
         except Exception as ex:
@@ -79,7 +79,7 @@ class SeleniumUIAction:
     @staticmethod
     def IsNotDisplayed(FindBy, search_criteria):
         is_display_element = None
-        element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
         if element is None:
             is_display_element = False
 
@@ -89,7 +89,7 @@ class SeleniumUIAction:
     def IsEnabled(FindBy, search_criteria):
         is_enabled = None
         try:
-            element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+            element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
             is_enabled = element.enabled
 
         except Exception as ex:
@@ -100,8 +100,8 @@ class SeleniumUIAction:
     def IsDisabled(FindBy, search_criteria):
         is_disabled = None
         try:
-            element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
-            if element.enabled() != False:
+            element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
+            if element.enabled is not True:
                 is_disabled = True
 
         except Exception as ex:
@@ -112,7 +112,7 @@ class SeleniumUIAction:
     def IsSelected(FindBy, search_criteria):
         is_selected = None
         try:
-            element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+            element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
             is_selected = element.is_selected
 
         except Exception as ex:
@@ -123,7 +123,7 @@ class SeleniumUIAction:
     def IsNotSelected(FindBy, search_criteria):
         is_not_elected = None
         try:
-            element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+            element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
             is_not_elected = element.is_selected
             if not is_not_elected:
                 print("Element is not Selected")
@@ -138,7 +138,7 @@ class SeleniumUIAction:
     def GetCSSValues(FindBy, search_criteria):
         list_css_details = None
         try:
-            element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+            element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
 
             if element is not None:
                 list_css_details.append(element.GetCssValue("font-type"))
@@ -154,7 +154,7 @@ class SeleniumUIAction:
     def Get_Text(FindBy, search_criteria):
         element_text = None
         try:
-            element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+            element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
             if element is not None:
                 element_text = element.text
 
@@ -165,7 +165,7 @@ class SeleniumUIAction:
     @staticmethod
     def GetAttributeValue(FindBy, search_criteria, attribute_name):
         attribute_value = None
-        element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
         attribute_value = element.get_attribute(attribute_name)
         return attribute_value
 
@@ -183,14 +183,14 @@ class SeleniumUIAction:
     @staticmethod
     def click_element(FindBy, search_criteria, wait_time=5):
         try:
-            element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+            element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
             element.click()
         except Exception as ex:
             raise Exception(f"unable to find element using search criteria : {FindBy} and  {search_criteria}" + ex)
 
     @staticmethod
     def clickMultipleElements(findUsing, searchCriteria, wait_time):
-        elements = BaseTest.Driver.FindAllPresentElements(findUsing, searchCriteria, wait_time)
+        elements = SeleniumUIAction.FindAllPresentElements(findUsing, searchCriteria, wait_time)
         for item in elements:
             actions = ActionChains(BaseTest.Driver)
             actions.move_to_element(item).perform()
@@ -198,7 +198,7 @@ class SeleniumUIAction:
 
     @staticmethod
     def ScrollToElement(FindBy, search_criteria):
-        element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
         actions = ActionChains(BaseTest.Driver)
         actions.move_to_element(element).perform()
 
@@ -224,14 +224,14 @@ class SeleniumUIAction:
 
     @staticmethod
     def HoverMouseOver(FindBy, search_criteria):
-        element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
         actions = ActionChains(BaseTest.Driver)
         actions.move_to_element(element).perform()
         time.sleep(3)
 
     @staticmethod
     def Set_textbox_value(FindBy, search_criteria, value_to_enter):
-        element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
         element.click()
         element.clear()
         element.send_keys(value_to_enter)
@@ -249,10 +249,10 @@ class SeleniumUIAction:
     def SelectItemByText(FindBy, search_criteria, item_text):
         element = None
         try:
-            element = BaseTest.Driver.FindClickableElement(FindBy,search_criteria)
+            element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
             drop = Select(element)
             drop.select_by_visible_text(item_text)
-            # drp_element = BaseTest.Driver.FindClickableElement(FindBy,search_criteria)
+            # drp_element = SeleniumUIAction.FindClickableElement(FindBy,search_criteria)
             # action = ActionChains(BaseTest.Driver)
             # action.click(on_element=drp_element).perform()
         except Exception as ex:
@@ -262,7 +262,7 @@ class SeleniumUIAction:
     def SelectItemByValue(FindBy, search_criteria, item_value):
         element = None
         try:
-            element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+            element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
             drop = Select(element)
             drop.select_by_visible_text(item_value)
             # drp_element = BaseTest.Driver.FindClickableElement(FindBy,search_criteria)
@@ -273,37 +273,37 @@ class SeleniumUIAction:
 
     @staticmethod
     def SelectItemByIndex(FindBy, search_criteria, itemIndex):
-        element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
         select = Select(element)
         select.select_by_index(itemIndex)
 
     @staticmethod
     def SelectCheckbox(FindBy, search_criteria):
-        element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
         if element.is_selected():
             element.click()
 
     @staticmethod
     def DeselectCheckbox(FindBy, search_criteria):
-        element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
         if element.is_selected():
             element.click()
 
     @staticmethod
     def SelectRadioButton(FindBy, search_criteria):
-        element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
         if element.is_selected():
             element.click()
 
     @staticmethod
     def DeselectRadioButton(FindBy, search_criteria):
-        element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
         if element.is_selected():
             element.click()
 
     @staticmethod
     def IsElementSelected(FindBy, search_criteria):
-        element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
         if element.selected:
             return True
         else:
@@ -311,21 +311,21 @@ class SeleniumUIAction:
 
     @staticmethod
     def GetDropDownList(FindBy, search_criteria):
-        element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
         select = Select(element)
         return select.options
 
     @staticmethod
     def SwitchToFrame(FindBy, search_criteria):
         try:
-            frame = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+            frame = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
             BaseTest.Driver.switch_to_frame(frame)
         except Exception as ex:
             print("Failed to switch to frame. Error:-  " + ex)
 
     @staticmethod
     def GetTableElements(FindBy, search_criteria):
-        element = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
 
     @staticmethod
     def get_header_column_values():
@@ -428,7 +428,7 @@ class SeleniumUIAction:
 
     @staticmethod
     def SelectDateInDatePickerField(FindBy, search_criteria):
-        date_input = BaseTest.Driver.FindClickableElement(FindBy, search_criteria)
+        date_input = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
         date_input.click()
         # date_input.send_keys(Keys.CONTROL, "a")  # Select all pre-existing text/input value
         # date_input.send_keys(Keys.BACKSPACE)  # Remove that text
@@ -437,9 +437,10 @@ class SeleniumUIAction:
     @staticmethod
     def is_page_load_complete(FindBy, search_criteria):
         print("Checking if {} page is loaded.".format(BaseTest.Driver.current_url))
-        element = BaseTest.Driver.FindVisibleElement(FindBy, search_criteria)
+        element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
         while not SeleniumUIAction.page_is_loading():
             continue
+        return True
 
     @staticmethod
     def page_is_loading():
@@ -470,96 +471,152 @@ class SeleniumUIAction:
         try:
             if not os.path.exists(destinationDirectory):
                 os.makedirs(destinationDirectory)
-            BaseTest.BaseTest.Driver.save_screenshot(destinationFile)
+            BaseTest.Driver.save_screenshot(destinationFile)
             print("Screenshot save to directory: " + destinationFile)
-        except:
+        except Exception as ex:
+            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            # if True:  # if log error is true
+            print("Error Occurred is : " + ex)
+            pass
             print("### Exception Occurred when taking screenshot")
             print_stack()
 
+    @staticmethod
     def FindElement(FindBy, search_criteria, wait_time=None):
         element = None
         try:
             if wait_time == 0:
                 wait_time = 10
 
-            element = WebDriverWait(BaseTest.BaseTest.Driver, wait_time).until(
+            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
+                NoSuchElementException,
+                StaleElementReferenceException,
+                ElementNotVisibleException,
+                InvalidSelectorException,
+                TimeoutException,
+                ElementNotSelectableException]).until(
                 EC.presence_of_element_located(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
             )
-        except (
-        StaleElementReferenceException, NoSuchElementException, InvalidSelectorException, TimeoutException) as ex:
+        except Exception as ex:
+            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            # if True:  # if log error is true
+            print("Error Occurred is : " + ex)
             pass
         return element
 
+    @staticmethod
     def FindClickableElement(FindBy, search_criteria, wait_time=5):
         element = None
         try:
             if wait_time == 0:
                 wait_time = 60
 
-            element = WebDriverWait(BaseTest.BaseTest.Driver, wait_time).until(
+            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
+                NoSuchElementException,
+                StaleElementReferenceException,
+                ElementNotVisibleException,
+                InvalidSelectorException,
+                TimeoutException,
+                ElementNotSelectableException]).until(
                 EC.element_to_be_clickable(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
             )
-        except (
-        StaleElementReferenceException, NoSuchElementException, InvalidSelectorException, TimeoutException) as ex:
+        except Exception as ex:
+            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            # if True:  # if log error is true
+            print("Error Occurred is : " + ex)
             pass
         return element
 
-    def FindVisibleElement(FindBy, search_criteria, wait_time=5):
+    @staticmethod
+    def FindVisibleElement(FindBy, search_criteria, wait_time=10):
         element = None
         try:
             if wait_time == 0:
-                wait_time = 60
+                wait_time = BaseTest.max_wait
 
-            element = WebDriverWait(BaseTest.BaseTest.Driver, wait_time).until(
+                print("waiting for maximum :: " + str(BaseTest.max_wait) + " :: for seconds to element clickable")
+            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
+                NoSuchElementException,
+                StaleElementReferenceException,
+                ElementNotVisibleException,
+                InvalidSelectorException,
+                TimeoutException,
+                ElementNotSelectableException]).until(
                 EC.visibility_of_element_located(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
             )
-        except (
-        StaleElementReferenceException, NoSuchElementException, InvalidSelectorException, TimeoutException) as ex:
+        except Exception as ex:
             # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            # if True:  # if log error is true
+            print("Error Occurred is : " + ex)
             pass
         return element
 
-    def WaitTillPageURLContains(expectedPartialURL, wait_time=5):
+    @staticmethod
+    def WaitTillPageURLContains(expectedPartialURL, wait_time=10):
         element = None
         try:
             if wait_time == 0:
                 wait_time = 60
 
-            element = WebDriverWait(BaseTest.BaseTest.Driver, wait_time).until(
+            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
+                NoSuchElementException,
+                StaleElementReferenceException,
+                ElementNotVisibleException,
+                InvalidSelectorException,
+                TimeoutException,
+                ElementNotSelectableException]).until(
                 EC.url_contains(expectedPartialURL)
             )
-        except (
-        StaleElementReferenceException, NoSuchElementException, InvalidSelectorException, TimeoutException) as ex:
+        except Exception as ex:
+            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            # if True:  # if log error is true
+            print("Error Occurred is : " + ex)
             pass
         return element
 
-    def WaitTillElementAppears(FindBy, search_criteria, wait_time=None):
+    @staticmethod
+    def WaitTillElementAppears(FindBy, search_criteria, wait_time=10):
         has_element_appeared = None
         try:
             if wait_time == 0:
                 wait_time = 60
 
-            element = WebDriverWait(BaseTest.BaseTest.Driver, wait_time).until(
+            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
+                NoSuchElementException,
+                StaleElementReferenceException,
+                ElementNotVisibleException,
+                InvalidSelectorException,
+                TimeoutException,
+                ElementNotSelectableException]).until(
                 EC.visibility_of_any_elements_located(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
             )
             has_element_appeared = element.displayed
-
-        except (
-        StaleElementReferenceException, NoSuchElementException, InvalidSelectorException, TimeoutException) as ex:
+        except Exception as ex:
+            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            # if True:  # if log error is true
+            print("Error Occurred is : " + ex)
             pass
             return has_element_appeared
 
+    @staticmethod
     def WaitTillElementDisAppears(FindBy, search_criteria, wait_time=None):
         has_element_appeared = None
         try:
             if wait_time == 0:
                 wait_time = 60
 
-            has_element_appeared = WebDriverWait(BaseTest.BaseTest.Driver, wait_time).until(
+            has_element_appeared = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
+                NoSuchElementException,
+                StaleElementReferenceException,
+                ElementNotVisibleException,
+                InvalidSelectorException,
+                TimeoutException,
+                ElementNotSelectableException]).until(
                 EC.invisibility_of_element_located(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
             )
-
-        except (
-        StaleElementReferenceException, NoSuchElementException, InvalidSelectorException, TimeoutException) as ex:
+        except Exception as ex:
+            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            # if True:  # if log error is true
+            print("Error Occurred is : " + ex)
             pass
         return has_element_appeared
