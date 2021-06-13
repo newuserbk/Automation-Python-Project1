@@ -18,7 +18,7 @@ class TestRegisterMultipleCourses(object):
         # self.ts = TestStatus(self.driver)
         self._baseTest = BaseTest()
 
-    @pytest.mark.run(order=15)
+    @pytest.mark.run(order=12)
     @pytest.mark.BVT
     def test_class2_1(self):
         print("Test-15")
@@ -32,7 +32,7 @@ class TestRegisterMultipleCourses(object):
         assert _Actual_URL == 'https://courses.letskodeit.com/'
         # self._baseTest.CloseAllBrowserWindow()
 
-    @pytest.mark.run(order=16)
+    @pytest.mark.run(order=13)
     @pytest.mark.BVT
     def test_class2_2(self):
         print("Test-16")

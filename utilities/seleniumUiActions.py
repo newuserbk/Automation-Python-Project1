@@ -1,6 +1,11 @@
 import os
 import time
 from traceback import print_stack
+
+from allure_commons.types import AttachmentType
+
+from utilities.genericUtils import OtherUtils as utils
+import allure
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, \
     ElementNotSelectableException, StaleElementReferenceException, InvalidSelectorException, TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -501,7 +506,8 @@ class SeleniumUIAction:
                 EC.presence_of_element_located(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
             )
         except Exception as ex:
-            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            testName = utils.getTestName()
+            allure.attach(BaseTest.Driver.get_screenshot_as_png(),name=testName,Attachment_Type=AttachmentType.PNG)
             # if True:  # if log error is true
             raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
                             search_criteria)
@@ -526,7 +532,8 @@ class SeleniumUIAction:
                 EC.element_to_be_clickable(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
             )
         except Exception as ex:
-            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            testName = utils.getTestName()
+            allure.attach(BaseTest.Driver.get_screenshot_as_png(), name=testName, Attachment_Type=AttachmentType.PNG)
             # if True:  # if log error is true
             raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
                             search_criteria)
@@ -552,7 +559,8 @@ class SeleniumUIAction:
                 EC.visibility_of_element_located(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
             )
         except Exception as ex:
-            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            testName = utils.getTestName()
+            allure.attach(BaseTest.Driver.get_screenshot_as_png(), name=testName, Attachment_Type=AttachmentType.PNG)
             # if True:  # if log error is true
             raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
                             search_criteria)

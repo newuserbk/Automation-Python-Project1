@@ -7,9 +7,10 @@ from utilities.genericUtils import OtherUtils as utils
 
 # @pytest.fixture(params=["chrome", "firefox", "ie"], scope="session")
 from testbase import BaseTest
+from utilities.readproperties import ReadConfig
 
 
-@pytest.yield_fixture(autouse=True,scope="class")
+@pytest.fixture(autouse=True,scope="class")
 def oneTimeSetUp(request,browser):
     log = cl.customLogger(logging.DEBUG)
     if browser == "chrome":
@@ -41,6 +42,9 @@ def oneTimeSetUp(request,browser):
     import configparser
     BaseTest.config = configparser.RawConfigParser()
     BaseTest.config.read(config_path)
+
+    # global login_launch_url
+    # login_launch_url = ReadConfig.getApplicationURL()
 
     # # Create object so that it will call base class constructor which will populate all the required properties
     base=BaseTest()

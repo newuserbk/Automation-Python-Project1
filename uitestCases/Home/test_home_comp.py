@@ -1,6 +1,9 @@
 import time
 
+import allure
 import pytest
+from allure_commons.types import AttachmentType
+
 import utilities.cutomLogger as cl
 import logging
 
@@ -24,6 +27,8 @@ class TestMultipleHomePageComp(object):
 
     @pytest.mark.run(order=1)
     @pytest.mark.BVT
+    @allure.description("test_DriverLaunchTest_1")
+    @allure.severity(severity_level="CRITICAL")
     def test_DriverLaunchTest_1(self):
         print("Test-1")
         self.log.error(utils.getTestName() + utils.getCurrentTime())
@@ -56,6 +61,8 @@ class TestMultipleHomePageComp(object):
 
     @pytest.mark.run(order=4)
     @pytest.mark.BVT
+    @allure.description("test_selectDropDown_4")
+    @allure.severity(severity_level="CRITICAL")
     def test_selectDropDown_4(self):
         print("Test-4")
         self.log.error(utils.getTestName() + utils.getCurrentTime())
@@ -69,6 +76,8 @@ class TestMultipleHomePageComp(object):
 
     @pytest.mark.run(order=5)
     @pytest.mark.BVT
+    @allure.description("test_RadioButton_5")
+    @allure.severity(severity_level="CRITICAL")
     def test_RadioButton_5(self):
         print("Test-5")
         self._homepage.select_radio_button("honda")
@@ -91,15 +100,47 @@ class TestMultipleHomePageComp(object):
 
     @pytest.mark.run(order=9)
     @pytest.mark.BVT
+    @allure.description("test_RadioButton_5")
+    @allure.severity(severity_level="CRITICAL")
     def test_OpenNewWindow_VerifyText_9(self):
         print("Test-9")
+        self.log.error(utils.getTestName() + utils.getCurrentTime())
+        # print("Root Directory is : "+utils.get_project_rootDirectory())
+        self.log.info("Launching browser from Base Class Global Driver")
+        BaseTest.go_to_url(self._baseTest.login_launch_url)
+        self._homepage.WaitForPageLoad()
+        self.log.info("Verify browser url")
+        self._homepage.select_OpenNewWindow_button()
+        self._homepage.Is_OpenNewWindow_button_Enabled()
+        self.log.info("Closing browser")
 
     @pytest.mark.run(order=10)
     @pytest.mark.BVT
+    @allure.description("test_RadioButton_5")
+    @allure.severity(severity_level="CRITICAL")
     def test_OpenNewTab_And_VerifyText_10(self):
         print("Test-10")
+        self.log.error(utils.getTestName() + utils.getCurrentTime())
+        # print("Root Directory is : "+utils.get_project_rootDirectory())
+        self.log.info("Launching browser from Base Class Global Driver")
+        BaseTest.go_to_url(self._baseTest.login_launch_url)
+        self._homepage.WaitForPageLoad()
+        self.log.info("Verify browser url")
+        self._homepage.select_OpenTab_button()
+        self._homepage.Is_OpenNewTab_button_Enabled()
+        self.log.info("Closing browser")
 
     @pytest.mark.run(order=11)
     @pytest.mark.BVT
+    @allure.description("test_RadioButton_5")
+    @allure.severity(severity_level="CRITICAL")
     def test_VerifyFrameText_11(self):
         print("Test-11")
+        try:
+            self.log.info("Launching browser from Base Class Global Driver")
+            BaseTest.go_to_url(self._baseTest.login_launch_url)
+            assert False is True
+        except Exception as ex:
+            testName = utils.getTestName()
+            allure.attach(BaseTest.Driver.get_screenshot_as_png(), name=testName, Attachment_Type=AttachmentType.PNG)
+            print(ex)
