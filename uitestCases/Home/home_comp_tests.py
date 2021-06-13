@@ -18,22 +18,26 @@ class TestMultipleHomePageComp(object):
     @pytest.fixture(autouse=True)
     def objectSetup(self):
         self.log.info("Visited local class oneTimeSetup")
-        self._homepage =homepageD()
+        self._homepage = homepageD()
         # self.ts = TestStatus(self.driver)
-        self._baseTest=BaseTest()
+        self._baseTest = BaseTest()
 
     @pytest.mark.run(order=1)
     @pytest.mark.BVT
     def test_DriverLaunchTest_1(self):
         print("Test-1")
-        self.log.error(utils.getTestName() +utils.getCurrentTime())
+        self.log.error(utils.getTestName() + utils.getCurrentTime())
         # print("Root Directory is : "+utils.get_project_rootDirectory())
         self.log.info("Launching browser from Base Class Global Driver")
         BaseTest.go_to_url(self._baseTest.login_launch_url)
         self._homepage.WaitForPageLoad()
         self.log.info("Verify browser url")
-        actualURL=BaseTest.getPageURL()
-        assert actualURL==self._baseTest.login_launch_url
+        _Actual_URL = BaseTest.getPageURL()
+        assert _Actual_URL == self._baseTest.login_launch_url
+        self._homepage.select_radio_button("honda")
+        self._homepage.Verify_radio_button_Is_Selected("honda")
+        self._homepage.Is_OpenNewTab_button_Enabled()
+        self._homepage.Is_OpenNewWindow_button_Enabled()
         self.log.info("Closing browser")
         BaseTest.CloseAllBrowserWindow()
 
@@ -54,11 +58,21 @@ class TestMultipleHomePageComp(object):
     @pytest.mark.BVT
     def test_selectDropDown_4(self):
         print("Test-4")
+        self.log.error(utils.getTestName() + utils.getCurrentTime())
+        # print("Root Directory is : "+utils.get_project_rootDirectory())
+        self.log.info("Launching browser from Base Class Global Driver")
+        BaseTest.go_to_url(self._baseTest.login_launch_url)
+        self._homepage.WaitForPageLoad()
+        self._homepage.select_DropDownClass_example_Text("Honda")
+        time.sleep(20)
+        self._homepage.select_DropDownClass_example_Text("BMW")
 
     @pytest.mark.run(order=5)
     @pytest.mark.BVT
     def test_RadioButton_5(self):
         print("Test-5")
+        self._homepage.select_radio_button("honda")
+        self._homepage.Verify_radio_button_Is_Selected("honda")
 
     @pytest.mark.run(order=6)
     @pytest.mark.BVT

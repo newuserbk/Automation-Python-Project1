@@ -37,13 +37,17 @@ class homepageD:
         print("..............Selecting Radio Button .............."+radioButtonName)
         SeleniumUIAction.click_element(FindBy.XPATH, self.radio_btn_xpath.format(radioButtonName))
 
+    def Verify_radio_button_Is_Selected(self, radioButtonName):
+        print("..............Verifying  Radio Button ....." + radioButtonName+" is selected")
+        SeleniumUIAction.IsSelected(FindBy.XPATH, self.radio_btn_xpath.format(radioButtonName))
+
     def select_Multiple_Values(self,values_to_select):
         print("..............Selecting Multiple values .............."+values_to_select)
         SeleniumUIAction.clickMultipleElements(FindBy.XPATH, self.multiple_select_xpath.format(values_to_select))
 
     def select_DropDownClass_example_Text(self,className):
         print(".......Selecting drop value .........."+className)
-        SeleniumUIAction.SelectItemByText(FindBy.ID, self.carselction_drpdwn_id, )
+        SeleniumUIAction.SelectItemByText(FindBy.ID, self.carselction_drpdwn_id,className)
 
     def EnterValue(self, value_to_enter):
         print(".............Entering value in textbox........."+value_to_enter)
@@ -52,6 +56,14 @@ class homepageD:
     def select_OpenNewWindow_button(self):
         print("..............Select Open New Window Button ..............")
         SeleniumUIAction.click_element(FindBy.ID, self.open_new_window_btn_id)
+
+    def Is_OpenNewWindow_button_Enabled(self):
+        print("..............Verifying Open New Window Button is enabled..............")
+        SeleniumUIAction.IsEnabled(FindBy.ID, self.open_new_window_btn_id)
+
+    def Is_OpenNewTab_button_Enabled(self):
+        print("..............Verifying Open Tab Button is enabled..............")
+        SeleniumUIAction.IsEnabled(FindBy.XPATH, self.open_tab_lnk_xapth)
 
     def select_OpenTab_button(self):
         print("..............Select Open Tab Button ..............")
@@ -62,6 +74,6 @@ class homepageD:
         SeleniumUIAction.click_element(FindBy.ID, self.alert_btn_id)
 
     def WaitForPageLoad(self):
-        page_Load_Status=SeleniumUIAction.is_page_load_complete(FindBy.ID,self.carselction_drpdwn_id)
-        print(page_Load_Status)
+        _Load_Status = SeleniumUIAction.is_page_load_complete(FindBy.ID,self.carselction_drpdwn_id)
+        print(_Load_Status)
 

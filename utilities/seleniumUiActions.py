@@ -90,7 +90,7 @@ class SeleniumUIAction:
         is_enabled = None
         try:
             element = SeleniumUIAction.FindVisibleElement(FindBy, search_criteria)
-            is_enabled = element.enabled
+            is_enabled = element.is_enabled
 
         except Exception as ex:
             print("..Element Not Found using locator : " + search_criteria + "Exception : " + ex)
@@ -160,6 +160,8 @@ class SeleniumUIAction:
 
         except Exception as ex:
             print("..Element Not found using locator : " + search_criteria + "Exception : " + ex)
+            raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
+                            search_criteria)
         return element_text
 
     @staticmethod
@@ -181,16 +183,16 @@ class SeleniumUIAction:
             return False
 
     @staticmethod
-    def click_element(FindBy, search_criteria, wait_time=5):
+    def click_element(FindBy, search_criteria, wait_time=60):
         try:
             element = SeleniumUIAction.FindClickableElement(FindBy, search_criteria)
             element.click()
         except Exception as ex:
-            raise Exception(f"unable to find element using search criteria : {FindBy} and  {search_criteria}" + ex)
+            raise Exception(f"unable to find element using search criteria : {0} and  {1}"+ex,FindBy,search_criteria)
 
     @staticmethod
-    def clickMultipleElements(findUsing, searchCriteria, wait_time):
-        elements = SeleniumUIAction.FindAllPresentElements(findUsing, searchCriteria, wait_time)
+    def clickMultipleElements(findUsing, searchCriteria, wait_time=60):
+        elements = SeleniumUIAction.FindAllVisibleElement(findUsing, searchCriteria, wait_time)
         for item in elements:
             actions = ActionChains(BaseTest.Driver)
             actions.move_to_element(item).perform()
@@ -422,6 +424,7 @@ class SeleniumUIAction:
     def IsNewTabOpened():
         is_new_tab_opened = None
         tabs = BaseTest.Driver.window_handles
+        SeleniumUIAction.WaitTillNewTabOpened(tabs) # check if works
         if tabs.count() == 2:
             is_new_tab_opened = True
         return is_new_tab_opened
@@ -482,11 +485,11 @@ class SeleniumUIAction:
             print_stack()
 
     @staticmethod
-    def FindElement(FindBy, search_criteria, wait_time=None):
+    def FindElement(FindBy, search_criteria, wait_time=60):
         element = None
         try:
             if wait_time == 0:
-                wait_time = 10
+                wait_time = 60
 
             element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
                 NoSuchElementException,
@@ -500,18 +503,20 @@ class SeleniumUIAction:
         except Exception as ex:
             # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
             # if True:  # if log error is true
+            raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
+                            search_criteria)
             print("Error Occurred is : " + ex)
             pass
         return element
 
     @staticmethod
-    def FindClickableElement(FindBy, search_criteria, wait_time=5):
+    def FindClickableElement(FindBy, search_criteria, wait_time=60):
         element = None
         try:
             if wait_time == 0:
                 wait_time = 60
 
-            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
+            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=5, ignored_exceptions=[
                 NoSuchElementException,
                 StaleElementReferenceException,
                 ElementNotVisibleException,
@@ -523,19 +528,21 @@ class SeleniumUIAction:
         except Exception as ex:
             # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
             # if True:  # if log error is true
+            raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
+                            search_criteria)
             print("Error Occurred is : " + ex)
             pass
         return element
 
     @staticmethod
-    def FindVisibleElement(FindBy, search_criteria, wait_time=10):
+    def FindVisibleElement(FindBy, search_criteria, wait_time=60):
         element = None
         try:
             if wait_time == 0:
                 wait_time = BaseTest.max_wait
 
                 print("waiting for maximum :: " + str(BaseTest.max_wait) + " :: for seconds to element clickable")
-            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
+            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=3, ignored_exceptions=[
                 NoSuchElementException,
                 StaleElementReferenceException,
                 ElementNotVisibleException,
@@ -547,12 +554,40 @@ class SeleniumUIAction:
         except Exception as ex:
             # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
             # if True:  # if log error is true
+            raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
+                            search_criteria)
             print("Error Occurred is : " + ex)
             pass
         return element
 
     @staticmethod
-    def WaitTillPageURLContains(expectedPartialURL, wait_time=10):
+    def FindAllVisibleElement(FindBy, search_criteria, wait_time=60):
+        element = None
+        try:
+            if wait_time == 0:
+                wait_time = BaseTest.max_wait
+
+                print("waiting for maximum :: " + str(BaseTest.max_wait) + " :: for seconds to element clickable")
+            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=3, ignored_exceptions=[
+                NoSuchElementException,
+                StaleElementReferenceException,
+                ElementNotVisibleException,
+                InvalidSelectorException,
+                TimeoutException,
+                ElementNotSelectableException]).until(
+                EC.visibility_of_all_elements_located(SeleniumUIAction.GenerateLocatorObject(FindBy, search_criteria))
+            )
+        except Exception as ex:
+            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            # if True:  # if log error is true
+            raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
+                            search_criteria)
+            print("Error Occurred is : " + ex)
+            pass
+        return element
+
+    @staticmethod
+    def WaitTillPageURLContains(expectedPartialURL, wait_time=60):
         element = None
         try:
             if wait_time == 0:
@@ -575,7 +610,7 @@ class SeleniumUIAction:
         return element
 
     @staticmethod
-    def WaitTillElementAppears(FindBy, search_criteria, wait_time=10):
+    def WaitTillElementAppears(FindBy, search_criteria, wait_time=60):
         has_element_appeared = None
         try:
             if wait_time == 0:
@@ -594,12 +629,14 @@ class SeleniumUIAction:
         except Exception as ex:
             # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
             # if True:  # if log error is true
+            raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
+                            search_criteria)
             print("Error Occurred is : " + ex)
             pass
             return has_element_appeared
 
     @staticmethod
-    def WaitTillElementDisAppears(FindBy, search_criteria, wait_time=None):
+    def WaitTillElementDisAppears(FindBy, search_criteria, wait_time=60):
         has_element_appeared = None
         try:
             if wait_time == 0:
@@ -617,6 +654,31 @@ class SeleniumUIAction:
         except Exception as ex:
             # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
             # if True:  # if log error is true
+            raise Exception(f"unable to find element using search criteria : {0} and  {1}" + ex, FindBy,
+                            search_criteria)
             print("Error Occurred is : " + ex)
             pass
         return has_element_appeared
+
+    @staticmethod
+    def WaitTillNewTabOpened(handles, wait_time=60):
+        has_element_appeared = None
+        try:
+            if wait_time == 0:
+                wait_time = 60
+
+            element = WebDriverWait(BaseTest.Driver, wait_time, poll_frequency=1, ignored_exceptions=[
+                NoSuchElementException,
+                StaleElementReferenceException,
+                ElementNotVisibleException,
+                InvalidSelectorException,
+                TimeoutException,
+                ElementNotSelectableException]).until(
+                EC.new_window_is_opened(BaseTest.Driver.window_handles)
+            )
+        except Exception as ex:
+            # allure.attach(Instance.get_screenshot_as_png(),name="logintest",Attachment_Type=AttachmentType.PNG)
+            # if True:  # if log error is true
+            print("Error Occurred is : " + ex)
+            pass
+            return has_element_appeared
