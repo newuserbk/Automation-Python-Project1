@@ -39,7 +39,7 @@ class TestMultipleHomePageComp(object):
         self._homepage.Is_OpenNewTab_button_Enabled()
         self._homepage.Is_OpenNewWindow_button_Enabled()
         self.log.info("Closing browser")
-        BaseTest.CloseAllBrowserWindow()
+        # BaseTest.CloseAllBrowserWindow()
 
     @pytest.mark.run(order=2)
     @pytest.mark.BVT
