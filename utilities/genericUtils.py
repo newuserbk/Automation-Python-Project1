@@ -3,7 +3,6 @@ import time
 import traceback
 import random, string
 from pathlib import Path
-import moment as moment
 import utilities.cutomLogger as cl
 import logging
 
@@ -17,7 +16,8 @@ class OtherUtils:
 
     @staticmethod
     def getCurrentTime():
-        currentTime = moment.now().strftime("%d-%m-%Y_%H-%M-%S")
+        # currentTime = moment.now().strftime("%d-%m-%Y_%H-%M-%S")
+        currentTime="test"
         return currentTime
 
     @staticmethod
