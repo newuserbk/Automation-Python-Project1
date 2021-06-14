@@ -19,13 +19,12 @@ class OtherUtils:
 
     @staticmethod
     def getCurrentTime():
-        currentTime = moment.now().strftime("%d-%m-%Y_%H-%M-%S")
-        # currentTime="test"
+        currentTime = moment.Moment.now().now().strftime("%d-%m-%Y_%H-%M-%S")
         return currentTime
 
     @staticmethod
     def get_project_rootDirectory():
-        root=str(Path(__file__).parent.parent)
+        root = str(Path(__file__).parent.parent)
         return root
 
     @staticmethod
