@@ -31,7 +31,7 @@ class Test_Login(object):
         # Driver.CloseDriver()
         pass
 
-    @pytest.mark.BVT
+    @pytest.mark.bvt
     @allure.description("test_verify_Amazon_homepage")
     @allure.severity(severity_level="CRITICAL")
     def test_verify_Amazon_homepage(self):
@@ -51,7 +51,7 @@ class Test_Login(object):
             allure.attach(BaseTest.Driver.get_screenshot_as_png(), name=testName, Attachment_Type=AttachmentType.PNG)
             raise Exception("....Element Not found....." + ex)
 
-    @pytest.mark.BVT
+    @pytest.mark.bvt
     @allure.description("test_amazon_create_account_successful")
     @allure.severity(severity_level="CRITICAL")
     def test_amazon_create_account_successful(self):
@@ -80,7 +80,7 @@ class Test_Login(object):
             allure.attach(BaseTest.Driver.get_screenshot_as_png(), name=testName, Attachment_Type=AttachmentType.PNG)
             print("Test Failed : "+ex)
 
-    @pytest.mark.BVT
+    @pytest.mark.bvt
     @allure.description("test_page_http_Status_code")
     @allure.severity(severity_level="NORMAL")
     def test_page_http_Status_code(self):

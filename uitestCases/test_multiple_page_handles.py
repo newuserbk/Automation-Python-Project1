@@ -26,7 +26,7 @@ class Test_Login(unittest.TestCase):
     def tearDown(self):
         Driver.CloseDriver()
 
-    @pytest.mark.BVT
+    @pytest.mark.bvt
     @pytest.mark.skip(reason="no way of currently testing this")
     def test_switch_window_and_download_pdf(self):
         download_dir = "C:\\Users"
