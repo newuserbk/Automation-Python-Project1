@@ -42,7 +42,8 @@ six==1.15.0
 soupsieve==2.0.1
 toml==0.10.2
 urllib3==1.25.9
-moments=2.0allure-pytest==2.9.41
+moments=2.0
+allure-pytest==2.9.41
 allure-python-commons==2.9.41
 apipkg==1.5
 arrow==1.1.0
