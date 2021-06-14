@@ -142,5 +142,5 @@ class TestMultipleHomePageComp(object):
             assert False is True
         except Exception as ex:
             testName = utils.getTestName()
-            allure.attach(BaseTest.Driver.get_screenshot_as_png(), name=testName, AttachmentType=AttachmentType.PNG)
+            allure.attach(BaseTest.Driver.get_screenshot_as_png(), name=testName, Attachment_Type=AttachmentType.PNG)
             print(ex)
