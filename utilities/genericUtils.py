@@ -19,7 +19,8 @@ class OtherUtils:
 
     @staticmethod
     def getCurrentTime():
-        currentTime = moment.Moment.now().now().strftime("%d-%m-%Y_%H-%M-%S")
+        # currentTime = moment.now().now().strftime("%d-%m-%Y_%H-%M-%S")
+        currentTime="test_"
         return currentTime
 
     @staticmethod
