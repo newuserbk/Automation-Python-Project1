@@ -36,6 +36,8 @@ class BSUtils(object):
             'os_version': '10',
             'browser': 'chrome',
             'browser_version': 'latest',
+            # 'browser_version': '90.0',
+            'w3c': 'false',
             'name': 'BStack-[Jenkins] Sample Test',  # test name
             'build': build_name,  # CI/CD job name using BROWSERSTACK_BUILD_NAME env variable
             'browserstack.local': browserstack_local,
