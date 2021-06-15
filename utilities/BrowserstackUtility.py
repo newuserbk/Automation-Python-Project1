@@ -1,3 +1,5 @@
+import os
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -11,17 +13,38 @@ class BSUtils(object):
 
     @staticmethod
     def launch_BS_Remote_Driver():
+        # desired_cap = {
+        #     'os_version': '10',
+        #     'resolution': '1920x1080',
+        #     'browser': 'Chrome',
+        #     'browser_version': '90.0',
+        #     'os': 'Windows',
+        #     'name': 'BStack-[Python] Sample Test',  # test name
+        #     'build': 'BStack Build Number 1'  # CI/CD job or build name
+        # }
+        # driver = webdriver.Remote(
+        #     command_executor='https://pravachandk_yNi7uf:xzrJ93h6wTosgxmaLBDy@hub-cloud.browserstack.com/wd/hub',
+        #     desired_capabilities=desired_cap)
+        username = os.getenv("BROWSERSTACK_USERNAME")
+        access_key = os.getenv("BROWSERSTACK_ACCESS_KEY")
+        build_name = os.getenv("BROWSERSTACK_BUILD_NAME")
+        browserstack_local = os.getenv("BROWSERSTACK_LOCAL")
+        browserstack_local_identifier = os.getenv("BROWSERSTACK_LOCAL_IDENTIFIER")
+
         desired_cap = {
-            'os_version': '10',
-            'resolution': '1920x1080',
-            'browser': 'Chrome',
-            'browser_version': '90.0',
             'os': 'Windows',
-            'name': 'BStack-[Python] Sample Test',  # test name
-            'build': 'BStack Build Number 1'  # CI/CD job or build name
+            'os_version': '10',
+            'browser': 'chrome',
+            'browser_version': 'latest',
+            'name': 'BStack-[Jenkins] Sample Test',  # test name
+            'build': build_name,  # CI/CD job name using BROWSERSTACK_BUILD_NAME env variable
+            'browserstack.local': browserstack_local,
+            'browserstack.localIdentifier': browserstack_local_identifier,
+            'browserstack.user': username,
+            'browserstack.key': access_key
         }
         driver = webdriver.Remote(
-            command_executor='https://pravachandk_yNi7uf:xzrJ93h6wTosgxmaLBDy@hub-cloud.browserstack.com/wd/hub',
+            command_executor='https://hub-cloud.browserstack.com/wd/hub',
             desired_capabilities=desired_cap)
         return driver
         # driver.get("https://www.google.com")
