@@ -27,7 +27,7 @@ class ReadConfig:
 
     @staticmethod
     def getEnv():
-        env = config.get('common info', 'env')
+        env = config.get('common info', 'TEST_ENV')
         return env
 
     @staticmethod
