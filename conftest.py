@@ -18,8 +18,8 @@ def oneTimeSetUp(request, browser):
     # Populate Data from config
 
     BaseTest.common_dic_data_details = get_Common_TEST_Data()
-    # ENV=os.getenv("TEST_ENV")  # Comment this line for local run
-    ENV = BaseTest.common_dic_data_details['TEST_ENV']  # Comment this line while commit
+    ENV=os.getenv("TEST_ENV")  # Comment this line for local run
+    # ENV = BaseTest.common_dic_data_details['TEST_ENV']  # Comment this line while commit
     BaseTest.env_dic_data_details = get_Specific_ENV_Details(ENV)
     bs_value = BaseTest.common_dic_data_details['UseBrowserstack']
     if str(bs_value).lower() == str("True").lower():
