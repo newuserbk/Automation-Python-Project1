@@ -34,7 +34,7 @@ class TestMultipleHomePageComp(object):
         self.log.error(utils.getTestName() + utils.getCurrentTime())
         # print("Root Directory is : "+utils.get_project_rootDirectory())
         self.log.info("Launching browser from Base Class Global Driver")
-        BaseTest.go_to_url(self._baseTest.login_launch_url)
+        BaseTest.go_to_url(BaseTest.env_dic_data_details['app_URL'])
         self._homepage.WaitForPageLoad()
         self.log.info("Verify browser url")
         _Actual_URL = BaseTest.getPageURL()

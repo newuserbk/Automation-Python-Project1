@@ -33,13 +33,15 @@ class BaseTest(object):
     global TaxYear
     global failedScreenShotPath
     testData.LoginUsers = []
+    global common_dic_data_details
+    global env_dic_data_details
 
     def __init__(self):
         # global config
         # config = configparser.RawConfigParser()
         # config.read("../configurations/config.ini")
         # self.ENV = BaseTest.config.get('common info', 'ENV')
-        self.login_launch_url = BaseTest.config.get('common info', 'application_URL')
+        self.login_launch_url = BaseTest.config.get('common info', 'app_URL')
         self.chrome_driver_server_path = BaseTest.config.get('common info', 'chrome_driver_path')
         self.base_url = BaseTest.config.get('common info', 'base_url')
         self.min_wait = BaseTest.config.get('common info', 'min_wait')
@@ -70,7 +72,7 @@ class BaseTest(object):
     @allure.step("Maximize window")
     def maximize_window_size():
         print("..............Maximizing browser window..............")
-        Driver.Instance.maximize_window()
+        BaseTest.Driver.maximize_window()
 
     @staticmethod
     @allure.step("Maximize window")
