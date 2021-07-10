@@ -109,4 +109,4 @@ times==0.7
 toml==0.10.2
 tzlocal==2.1
 urllib3==1.25.9
-allure-commandline==2.13.8
+allure-commandline==2.14.0
